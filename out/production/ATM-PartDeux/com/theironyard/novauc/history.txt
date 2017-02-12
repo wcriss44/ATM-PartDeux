@@ -1,0 +1,72 @@
+
+    /**
+     *        TODO: Update menu flow for this document
+     *        TODO: Pin verification algorithm needs writing
+     *        TODO: testing
+     *        TODO: cleanup class files
+     *        TODO: Add intercepting scanner to allow hidden /return
+     *        TODO: moar comments
+     * [FIXED]TODO: IMPORTANT!!!!!! stuck in account selection if no account exists! Fix this!!
+     * [FIXED]TODO: nullPointer found on manage savings?
+     * [FIXED]TODO: Finish building all methods
+     *
+     * [FIXED]TODO: CLEAN up displays. invalid choice consistency as well as add ERROR
+     * [ADDED]TODO: Add User display!
+     *
+     * [DONE]TODO: Working now on Manage Account section
+     * [DONE]TODO: Still missing menu loop. Remember to add
+     * [DONE]TODO: Account Name and Balance to user Display!
+     * [DONE]TODO: AtmMenu.Starmaker() needs verification on spacing
+     *
+     *      Manage Account
+     *      User: loginName           \t account Name: accountName
+     *      Account Type: accountType \t Account Balance: balance
+     *
+     * [DONE]TODO: Have star maker display balance of account
+     *       while in account menu
+     *
+     * [DONE] TODO: also make sure it always displays Login name
+     *       after login
+     *
+     *
+     *
+     *                                  menu flow:
+     *
+     * menu.bootUp()
+     * [new user][login][quit]
+     *
+     * [new user] -> [add user][return]
+     * [login]    -> login screen
+     * [exit]     -> System.exit(0)
+     *
+     * [new user]
+     * [add user] -> add user screen
+     * [return]   -> method to go back
+     *
+     * [add user]
+     * Run openAccount() and then Prompt for name, pin, account type
+     * [savings]   -> add savings with checks for previous accounts
+     * [checking]  -> add checking with checks for previous accounts
+     * [return]    -> method to go back
+     *
+     * [login]
+     * after login screen:
+     * [open account]    ->  [savings][checking][return]
+     * [manage account]  ->  choose type and then: [withdraw][deposit][transfer][close account][return]
+     * [logout] (return should work here!!)
+     *
+     * [open account]
+     * [savings]
+     * [checking]
+     * [return]
+     *
+     * [manage account]
+     * [withdraw]       -> withdraw funds
+     * [deposit]        -> deposit funds
+     * [transfer]       -> transfer to account
+     * [close account]  -> remove hash entry
+     * [return]         -> return method
+     * [logout]
+     *
+     *
+     */

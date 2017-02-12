@@ -4,15 +4,14 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class ATM {
-    public static Scanner input = new Scanner(System.in);
-    public static Scanner inputDouble = new Scanner(System.in);
-    public static Scanner inputInt = new Scanner(System.in);
-    public static Menu menu = new Menu();
-    public static HashMap<String, String> users = new HashMap();
+    public static HashMap<String, Users> users = new HashMap<>();
+    public static Scanner scanner = new Scanner(System.in);
+    public static Scanner scannerDbl = new Scanner(System.in);
+    public static Scanner scannerInt = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        //users.put("WILL", "3499");
-        menu.ATMOnline();
+    public static void main(String[] args) throws Exception {
 
+        AtmMenu menu = new AtmMenu();
+        menu.bootUp();
     }
 }
