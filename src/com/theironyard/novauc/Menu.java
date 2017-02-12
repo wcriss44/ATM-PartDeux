@@ -35,9 +35,6 @@ public class Menu {
             }
         }
     }
-    public void mainMenu(){
-
-    }
     public void addUser(){
         System.out.println("Add a user menu");
         int i = 1;
@@ -108,14 +105,13 @@ public class Menu {
             yourChoice = ATM.input.nextLine();
             switch (yourChoice.toUpperCase()){
                 case "ADMIN":
-                    //admin();
+                    adminMenu(loginName);
                     break;
                 case "MANAGE ACCOUNT":
                 case "MANAGEACCOUNT":
                     manageAccount();
                     break;
                 case "LOGOUT":
-                    //logout();
                     return;
                 default:
                     System.out.println("Please enter a valid choice");
@@ -127,36 +123,10 @@ public class Menu {
     }
     public  void manageAccount(){
         //System.out.println(accounts.get(loginName.toUpperCase()).get(0));
-        System.out.println("Account Management area.");
-        System.out.println("Which account would you like to manage? Choose a number");
-        int displayNumber = 0;
-        int accountMax = User.accounts.get(loginName.toUpperCase()).size() - 1;//verify!!!!!!!!!!!!!!!!!!!!!
-        if (accountMax == 2){
-            accountMax = 1;
-        } else {
-            accountMax = ((accountMax - 1) / 2) + 1;
-        }
-        System.out.println(accountMax);
-
+        int[] accountSelection = accountDisplayLoop(loginName, yourIntChoice);
+        yourAccount = accountSelection[0];
+        yourIntChoice = accountSelection[1];
         int i = 1;
-        loop: while (i == 1){
-            for(int x = 1; x <= accountMax; x+=2 ){
-            displayNumber++;
-            System.out.print("(" + User.accounts.get(loginName.toUpperCase()).get(x) + " ["+ displayNumber + "]" +")");
-        }
-            System.out.println("\nYour choice: ");
-            yourIntChoice =  ATM.inputInt.nextInt();
-            if ( yourIntChoice > accountMax ){
-                System.out.println("Please enter a valid choice!");
-            } else {
-                break loop;
-            }
-        }
-        if (yourIntChoice == 1){
-            yourAccount = 1;
-        } else {
-            yourAccount = (yourIntChoice * 2) - 1;
-        }
         loop: while (i == 1){
             System.out.println("You are managing: " + User.accounts.get(loginName.toUpperCase()).get(yourAccount) + " [" + yourIntChoice + "]");
             System.out.println("What would you like to do?");
@@ -178,14 +148,74 @@ public class Menu {
                 case "LAST MENU":
                 case "LASTMENU":
                     break loop;
+                default:
+                    System.out.println("Please put in a correct value.");
             }
 
         }
     }
-    public void logout(){
-
+    public static int[] accountDisplayLoop(String loginName, int yourIntChoices){
+        int yourIntChoice = yourIntChoices;
+        //System.out.println("Account Management area.");
+        System.out.println("Your accounts are listed by number. Please Choose a number");
+        int yourAccount = 0;
+        int displayNumber = 0;
+        int accountMax = User.accounts.get(loginName.toUpperCase()).size() - 1;//verify!!!!!!!!!!!!!!!!!!!!!
+        if (accountMax == 2){
+            accountMax = 1;
+        } else {
+            accountMax = ((accountMax - 1) / 2) + 1;
+        }
+        int i = 1;
+        loop: while (i == 1){
+            for(int x = 1; x <= accountMax; x+=2 ){
+                displayNumber++; //FIX! LOOP displays the wrong amount!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                System.out.print("(" + User.accounts.get(loginName.toUpperCase()).get(x) + " ["+ displayNumber + "]" +")");
+            }
+            System.out.println("\nYour choice: ");
+            yourIntChoice =  ATM.inputInt.nextInt();
+            if ( yourIntChoice > accountMax ){
+                System.out.println("Please enter a valid choice!");
+            } else {
+                break loop;
+            }
+        }
+        if (yourIntChoice == 1){
+            yourAccount = 1;
+        } else {
+            yourAccount = (yourIntChoice * 2) - 1;
+        }
+         int[]accountSelection = {yourAccount, yourIntChoice};
+        return accountSelection;
     }
     public void exit(){
+
+    }
+    public void adminMenu(String loginName){
+        System.out.println("Welcome to Account Administration!");
+        int i = 1;
+        while(i == 1) {
+            System.out.println("You can: [Add Account][Remove Account][Last menu]");
+            System.out.print("Your choice: ");
+            yourChoice = ATM.input.nextLine();
+            switch (yourChoice.toUpperCase()){
+                case "ADD ACCOUNT":
+                case "ADDACCOUNT":
+                    User.addAccount(loginName);
+                    break;
+                case "REMOVE ACCOUNT":
+                case "REMOVEACCOUNT":
+                    User.removeAccount(loginName);
+                    break;
+                case "LAST MENU":
+                case "LASTMENU":
+                    return;
+                default:
+                    System.out.println("Please enter a valid choice");
+                    break;
+            }
+        }
+
 
     }
 }

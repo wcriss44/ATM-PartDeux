@@ -10,7 +10,6 @@ public class ATM {
     public static Menu menu = new Menu();
     public static HashMap<String, String> users = new HashMap();
 
-
     public static void main(String[] args) {
         //users.put("WILL", "3499");
         menu.ATMOnline();

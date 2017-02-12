@@ -20,12 +20,15 @@ public class User {
     }
 
     public static void withdraw(String loginName, int yourAccount, int yourIntChoice){
-        printAccount(loginName, yourAccount, yourIntChoice);
-        System.out.println("Withdraw amount: ");
-        double withdrawAmount = ATM.inputDouble.nextDouble();
-        double balance =  (double)accounts.get(loginName.toUpperCase()).get(yourAccount + 1);
+        double withdrawAmount = 0;
+        double balance = 0;
+
         int i = 1;
         loop: while(i == 1) {
+            printAccount(loginName, yourAccount, yourIntChoice);
+            System.out.println("Withdraw amount: ");
+            withdrawAmount = ATM.inputDouble.nextDouble();
+            balance = (double)accounts.get(loginName.toUpperCase()).get(yourAccount + 1);
             if (withdrawAmount > balance) {
                 System.out.println("Withdraw exceeds available funds!");
             } else {
@@ -64,20 +67,24 @@ public class User {
         String transferTarget = ATM.input.nextLine();
         if (ATM.users.containsKey(transferTarget.toUpperCase())) {
             System.out.println("Account user found.");
-            System.out.println("Which account do you want to transfer to?");
 
-        System.out.println("How much would you like to transfer?");
-        System.out.println("Amount: ");
+            int[] transferedAccount = User.getTransferAccount(transferTarget);
+            int transferAccount = transferedAccount[0];
 
-        double transferAmount = ATM.inputDouble.nextDouble();
-        double balance =  (double)accounts.get(loginName.toUpperCase()).get(yourAccount + 1);
 
-        int i = 1;
-        loop: while (i == 1){
-            if (transferAmount > balance) {
+
+            int i = 1;
+            loop: while (i == 1){
+                System.out.println("How much would you like to transfer?");
+                System.out.println("Amount: ");
+                double transferAmount = ATM.inputDouble.nextDouble();
+                double balance =  (double)accounts.get(loginName.toUpperCase()).get(yourAccount + 1);
+            if (transferAmount > balance) { //Loop needs fixing! infinite loop found here!!!!!!!!!!!!!!!!!!
                 System.out.println("Transfer exceeds available funds!");
             } else {
                 accounts.get(loginName.toUpperCase()).set(yourAccount + 1, balance - transferAmount);
+                double oldBalance = (double)accounts.get(transferTarget.toUpperCase()).get(transferAccount + 1);
+                accounts.get(transferTarget.toUpperCase()).set(transferAccount + 1, oldBalance + transferAmount);
                 break loop;
             }
         }
@@ -85,10 +92,35 @@ public class User {
         }
 
     }
-    public void removeAccount(){
-
+    public static void removeAccount(String loginName){
+        System.out.println("Account Remove Area.");
+        int[] selectedAccount = Menu.accountDisplayLoop(loginName, 0);
+        int deleteAccount = selectedAccount[0];
+        System.out.println("Your account is being deleted...");
+        accounts.get(loginName.toUpperCase()).remove(deleteAccount);
+        accounts.get(loginName.toUpperCase()).remove(deleteAccount);
+        System.out.println("All done!");
     }
-    public void addAccount(){
+    public static void addAccount(String loginName){
+        int i = 1;
+        loop: while(i == 1) {
+            System.out.println("What type of account would you like to add? [Checking][Savings]");
+            System.out.println("Your choice: ");
+            String accountType = ATM.input.nextLine();
+            switch(accountType.toUpperCase()){
+                case "CHECKING":
+                case "SAVINGS":
+                    System.out.println("New " + accountType + ".");
+                    System.out.println("Your starting balance is $0.00");
+                    accounts.get(loginName.toUpperCase()).add(accountType);
+                    accounts.get(loginName.toUpperCase()).add(0.00);
+                    break loop;
+                default:
+                    System.out.println("Please enter a valid choice.");
+                    break;
+            }
+
+        }
 
     }
     /*******************
@@ -141,8 +173,40 @@ public class User {
         System.out.println("Great! You are " + newName + ", and you are opening a new " + accountType + " with a balance of $" + newBalance + "!" );
 
     }
-    public static void getTransferAccount(){
-        
+    public static int[] getTransferAccount(String transferTarget){
+        int yourIntChoice = 0;
+        int yourAccount;
+        System.out.println("Which account do you want to transfer to? ");
+        int[] accountSelection = Menu.accountDisplayLoop(transferTarget, 0);
+        return accountSelection;
+//        System.out.println("Account Management area.");
+//        System.out.println("Which account would you like to manage? Choose a number");
+//        int displayNumber = 0;
+//        int accountMax = User.accounts.get(transferTarget.toUpperCase()).size() - 1;//verify!!!!!!!!!!!!!!!!!!!!!
+//        if (accountMax == 2){
+//            accountMax = 1;
+//        } else {
+//            accountMax = ((accountMax - 1) / 2) + 1;
+//        }
+//        int i = 1;
+//        loop: while (i == 1){
+//            for(int x = 1; x <= accountMax; x+=2 ){
+//                displayNumber++;
+//                System.out.print("(" + User.accounts.get(transferTarget.toUpperCase()).get(x) + " ["+ displayNumber + "]" +")");
+//            }
+//            System.out.println("\nYour choice: ");
+//            yourIntChoice =  ATM.inputInt.nextInt();
+//            if ( yourIntChoice > accountMax ){
+//                System.out.println("Please enter a valid choice!");
+//            } else {
+//                break loop;
+//            }
+//        }
+//        if (yourIntChoice == 1){
+//            yourAccount = 1;
+//        } else {
+//            yourAccount = (yourIntChoice * 2) - 1;
+//        }
     }
 
 
